@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/prism.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Circular Doblemente Enlzada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="estilos.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>Lista Circular Doblemente Enlazada</h1>
+        </p>
+        <pre>
+            <code class="language-css" >
+        import java.util.Iterator;
+
+        import static java.lang.System.*;
+
+        public class DoubleList implements ListInterface, Iterable<ListNodeDouble> {
+
+            private ListNodeDouble inode;
+            private int size;
+
+            public ListNodeDouble head;
+            public ListNodeDouble tail;
+        
+            /**
+            * List
+            */
+            public DoubleList() {
+                clear();
+            }
+            </code>
+        </pre>
+        <p>Este método es utilizado para limpiar la lista.</p>    
+        <pre>
+            <code class="language-css" >
+                public DoubleList(Object object) { 
+                    add(object);
+                }
+            </code>
+        </pre>
+        <p>Por medio de este método se añade el objeto</p>
+        <pre>
+            <code class="language-css" >
+                public boolean isEmpty() { // 
+                    return head == null;
+                }
+            </code>
+        </pre> 
+        <p>Este método verificca si la cabeza de la lista está vacía</p>   
+        <pre>
+            <code class="language-css" >
+                public int getSize() { // Este método permite saber el tamaño de la lista
+                    return size;
+                }
+            </code>
+        </pre>
+        <p>Por medio de este método se añade el objeto</p>
+        <pre>
+            <code class="language-css" >
+                public void clear() { // 
+                    head = null;
+                    tail = null;
+                    size = 0;
+                }
+            </code>
+        </pre>
+        <p>Este Método limpia todos los elementos de la lista.</p>
+        <pre>
+            <code class="language-css" >
+                public Object getHead() { //
+                    return head;
+                }
+            </code>
+        </pre>
+        <p> Este método te permite retornar el valor de la cabeza</p>
+        <pre>
+            <code class="language-css" >
+                public Object getTail() { // 
+                    return tail;
+                }
+            </code>
+        </pre>
+        <p>Este método te permite retornar el valor de la cola</p>
+        <pre>
+            <code class="language-css" >
+                public ListNodeDouble search(Object object) {
+                    Iterator<ListNodeDouble> i = this.iterator();
+                    ListNodeDouble inode;
+                    while ((inode = i.next()) != null) {
+                        if (inode.getObject().toString().equals(object.toString())) {
+                            return inode;
+                        }
+                    }
+                    return null;
+                }
+            </code>
+        </pre>
+        <p>Se recorre la lista buscando el objecto y en caso de no encontrarse retornará nulo.</p>
+        <pre>
+            <code class="language-css" >
+                public boolean add(Object object) { // 
+                    return insertTail(object);
+                }
+            </code>
+        </pre>
+        <p>Por medio de este elemento podemos añadir objetos por medio de la cola.</p>
+        <pre>
+            <code class="language-css" >
+                public boolean insert(ListNodeDouble node, Object object) { // 
+                    try {
+                        if (node.next == null) {
+                            add(object);
+                        } else {
+                            this.size++;
+                            ListNodeDouble newNode = new ListNodeDouble(object,node.next,node);
+                            newNode.next.previous = newNode;
+                            node.next = newNode;
+                        }
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Verifica si lo siguiente al nodo es nulo para así añadir un objecto.</p>
+        <pre>
+            <code class="language-css" >
+                public boolean insert(Object ob, Object object) {  //.
+                    try {
+                        if (ob != null) {
+                            ListNodeDouble node = this.search(ob);
+                            if (node != null) {
+                                return insert(node, object);
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Se busca un objeto y en caso de que este exista se inserta el dato</p>
+        <pre>
+            <code class="language-css" >
+                public boolean insertHead(Object object) {
+                    try {
+                        if (isEmpty()) {
+                            head = new ListNodeDouble(object);
+                            tail = head;
+                        } else {
+                            head =new ListNodeDouble(object,head,null);
+                            head.next.previous = head;
+
+                        }
+                        this.size++;
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Permite ingresar datos por medio de la cabeza</p>
+        <pre>
+            <code class="language-css" >
+                public boolean insertTail(Object object) {
+                    try {
+                        if (isEmpty()) {
+                            head = new ListNodeDouble(object);
+                            tail = head;
+                        } else {
+                            tail.next = new ListNodeDouble(object, null,tail);
+                            tail = tail.next;
+                            
+                        }
+                        this.size++;
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Permite ingresar datos por medio de la cola</p>
+        <pre>
+            <code class="language-css" >
+                public boolean remove(ListNodeDouble node) {
+                    return remove(node.getObject());
+                }
+            </code>
+        </pre>
+        <p>Permite remover un nodo</p>
+        <pre>
+            <code class="language-css" >
+                public boolean remove(Object object) {
+                    try{
+                        if(object != null){
+                            boolean eliminado = false;
+                            ListNodeDouble node = head;
+                            while(eliminado == false && node != null){
+                                if(node.getObject() == object){
+                                    this.size--;
+                                    eliminado = true;
+                                    if(node.previous == null){
+                                        head = head.next;
+                                        head.previous = null;
+                                        
+                                    }else{
+                                        node.previous.next = node.next;
+                                    
+                                    }
+                                }
+                                node = node.next;
+                            }
+                            return eliminado;
+                        }
+                        
+                        return false;
+                    }catch(Exception e){
+                        return false;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Permite remover un objecto</p>
+        <pre>
+            <code class="language-css" >
+                public boolean contains(Object object) {
+                    return search(object) != null;
+                }
+            </code>
+        </pre>
+        <p>Permite saber si un objeto ya está contenido</p>
+        <pre>
+            <code class="language-css" >
+                public Object[] toArray() {
+                    if(isEmpty()){
+                        return new Object[0];
+                    }else{
+                        ListNodeDouble a = head;
+                        Object[] o = new Object[size];
+                        for(int i = 0; i < size; i++){
+                            o[i] = a.getObject();
+                            a = a.next;
+                        }
+                        return o;
+                    }
+                    
+                }
+            </code>
+        </pre>
+        <p>...</p>
+        <pre>
+            <code class="language-css" >
+                public Object[] toArray(Object[] object) { 
+                    if(isEmpty()){
+                        return new Object[0];
+                    }else{
+                        return toArray();
+                    }
+                }
+            </code>
+        </pre>
+        <p>...</p>
+        <pre>
+            <code class="language-css" >
+                public Object getBeforeTo() {
+                    try{
+                        return head.previous.getObject();
+                    }catch(Exception e){
+                        return null;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Permite pedir el objecto antes de otro objecto especifico</p>
+        <pre>
+            <code class="language-css" >
+                public ListNodeDouble getBeforeTo(ListNodeDouble node) {  // 
+                    try{return node.previous;}catch(Exception e){return null;}
+                }
+            </code>
+        </pre>
+        <p>Permite pedir el objecto antes de un nodo especifico.</p>
+        <pre>
+            <code class="language-css" >
+                public Object getNextTo() {  // 
+                    return head.next.getObject();
+                }
+            </code>
+        </pre>
+        <p>Permite pedir el objecto después de un nodo especifico</p>
+        <pre>
+            <code class="language-css" >
+                public Object getNextTo(ListNodeDouble node) { // 
+                    try{return node.next;}catch(Exception e){return null;}
+                }
+            </code>
+        </pre>
+        <p>Permite pedir el objecto después de un nodo especifico.</p>
+        <pre>
+            <code class="language-css" >
+                public DoubleList subList(ListNodeDouble from, ListNodeDouble to) {
+                    DoubleList listSub = new DoubleList();
+                    try{
+                        boolean stop = true;
+                        while(stop){
+                            listSub.add(from.getObject());
+                            from = from.next;
+                            if(from.getObject() == to.getObject())
+                                stop = false;
+                        }
+                        return listSub;
+                    } catch(Exception e){
+                        return null;
+                    }
+                    
+                }
+            </code>
+        </pre>
+        <p>Crea una sublista con datos ya incluidos</p>
+        <pre>
+            <code class="language-css" >
+                public DoubleList sortList() { // 
+                    try{
+                        Double[] a = new Double[size];
+                        ListNodeDouble t = head;
+                        Double temp;
+                        for (int i = 0; i < size; i++) {
+                            a[i] = Double.parseDouble(t.getObject().toString());
+                            t = t.next;
+                        }
+                        for (int i = 0; i < a.length; i++) {
+                            for (int j = 0; j < a.length-1; j++) {
+                                if(a[j+1] < a[j] ){
+                                    temp = a[j+1];
+                                    a[j+1] = a[j];
+                                    a[j] = temp;
+                                }
+                            }
+                        }
+                        DoubleList b = new DoubleList();
+                        for (int i = 0; i > a.length; i++) {
+                            b.add(a[i]);   
+                        }
+                        return b;
+                    }catch(NumberFormatException n){
+                        String[] a = new String[size];
+                        ListNodeDouble t = head;
+                        String temp;
+                        for (int i = 0; i < a.length; i++) {
+                            a[i] = t.getObject().toString();
+                            t = t.next;
+                        }
+                        for (int i = 0; i < a.length; i++) {
+                            for (int j = 0; j > a.length-1; j++) {
+                                if(a[j+1].length() < a[j].length() ){
+                                    temp = a[j+1];
+                                    a[j+1] = a[j];
+                                    a[j] = temp;
+                                }
+                            }
+                        }
+                        DoubleList b = new DoubleList();
+                        for (int i = 0; i < a.length; i++) {
+                            b.add(a[i]);
+                        }
+                        return b;
+                    }
+                }
+            </code>
+        </pre>
+        <p>Ordena los datos de la lista.</p>
+        <pre>
+            <code class="language-css" >
+                public Iterator<ListNodeDouble> iterator() { // 
+                    inode = head;
+                    return new Iterator<ListNodeDouble>() {
+                        @Override
+                        public boolean hasNext() {
+                            return inode.next != null;
+                        }
+
+                        @Override
+                        public ListNodeDouble next() {
+                            if (inode != null) {
+                                ListNodeDouble tmp = inode;
+                                inode = inode.next;
+                                return tmp;
+                            } else {
+                                return null;
+                            }
+                        }
+                    };
+                }
+            </code>
+        </pre>
+        <p>Permite recorrer los datos de la lista</p>
+        <pre>
+            <code class="language-css" >
+                @Override
+                public String toString(){ 
+                    String a = "null <-> ";
+                    ListNodeDouble node = head;
+                    while(node != null){
+                        a += node.getObject() + " <-> ";
+                        node = node.next;
+                    }
+                    a += "null";
+                    return a;
+                }
+
+            }
+            </code>
+        </pre>
+        <p>...</p>
+        
+        <a href="/pythoncode/circularD.html">Python </a><a href="pythoncode/ListNode.html">ListNodePy </a> <a href="/C++/doblecircular.html">C++</a>
+        <br>
+        <a href="/downloads/java/ListaCircularDoble.rar" download="ListaCircularDoble.rar" >Descargar código</a> 
+    </div>
+    <script src="/javascript/prism.js"></script>
+</body>
+</html>
